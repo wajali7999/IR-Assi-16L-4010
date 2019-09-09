@@ -4,7 +4,7 @@ Created on Fri Sep  6 22:32:32 2019
 
 @author: wajahat
 """
-
+#IR Assigbment
 import sys
 import os
 import requests
