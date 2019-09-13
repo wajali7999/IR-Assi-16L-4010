@@ -26,9 +26,9 @@ docID=open("docids.txt", "w",errors='ignore')
 termID=open("termids.txt", "w",errors='ignore')
 termDocPair = dict()
 for file in os.listdir(path):
-#    b=b+1;
-#    if b is 6:
-#        break
+    b=b+1;
+    if b is 6:
+        break
     myfile = os.path.join(path, file)
     print(myfile);
     myfile=open(myfile,errors='ignore')
@@ -78,7 +78,12 @@ for file in os.listdir(path):
                 termlist.append(w)
                 IDterm=IDterm+1
                 termID.write(str(IDterm) + "\t" + w + "\n")
-                termDocPair.update( {IDterm : IDdoc} )
+                doclist=[]
+                doclist.append(IDdoc)
+                termDocPair.update( {IDterm : doclist} )
+            else:
+                #for tID,dID in termDocPair.items:
+                termDocPair[termlist.index(w)+1].append(IDdoc)    
                 
         IDdoc=IDdoc+1       
         docID.write(str(IDdoc)+"\t"+file+"\n")
