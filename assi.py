@@ -24,7 +24,7 @@ path="D:\A.Fast sem 7\IR\corpus\corpus"
 #def processFiles():
 docID=open("docids.txt", "w",errors='ignore')
 termID=open("termids.txt", "w",errors='ignore')
-
+termDocPair = dict()
 for file in os.listdir(path):
 #    b=b+1;
 #    if b is 6:
@@ -53,8 +53,8 @@ for file in os.listdir(path):
         token = tokenizer.tokenize(texts) 
         tokens=[x.lower() for x in token]
 
-        print ("Total token count:",len(tokens))
-        print ("vocabulary size or token types:", len(set(tokens))) 
+        #print ("Total token count:",len(tokens))
+        #print ("vocabulary size or token types:", len(set(tokens))) 
         
         st=open("D:\A.Fast sem 7\IR\corpus\stoplist.txt")
         stop=st.read()
@@ -78,15 +78,18 @@ for file in os.listdir(path):
                 termlist.append(w)
                 IDterm=IDterm+1
                 termID.write(str(IDterm) + "\t" + w + "\n")
-                
+                termDocPair.update( {IDterm : IDdoc} )
                 
         IDdoc=IDdoc+1       
         docID.write(str(IDdoc)+"\t"+file+"\n")
          
         myfile.close()
-
+        stemmed_word.clear()
+        token.clear()
+        tokens.clear()
+        stoplist.clear()
 docID.close()
-IDterm.close()
+termID.close()
         #print(tokens)
         #Sprint(token)
 #        with open("output.txt", "a",errors='ignore') as ofile:
