@@ -17,7 +17,7 @@ from nltk.stem import SnowballStemmer
 from string import punctuation
 IDdoc=0
 IDterm=0;
-termlist=[]
+termlist1=dict()
 
 b=0;
 #path= sys.argv[1]
@@ -29,9 +29,9 @@ termID=open("termids.txt", "w",errors='ignore')
 termIndex=open("term_index.txt","w+",errors='ignore')
 termDocPair = dict()
 for file in os.listdir(path):
-    b=b+1;
-    if b is 5:
-        break
+#    b=b+1;
+#    if b is 5:
+#        break
     myfile = os.path.join(path, file)
     print(myfile);
     myfile=open(myfile,errors='ignore')
@@ -52,12 +52,13 @@ for file in os.listdir(path):
         texts1 = '\n'.join(chunk for chunk in chunks if chunk)
       
         texts=''.join(c for c in texts1 if c not in punctuation)
+        #texts=''.join(c for c in texts2 if c.isalpha())
         IDdoc=IDdoc+1       
         docID.write(str(IDdoc)+"\t"+file+"\n")
 
         tokenizer = RegexpTokenizer(r"\w+")  
         token = tokenizer.tokenize(texts) 
-        tokens=[x.lower() for x in token]
+        tokens=[x.lower() for x in token if x.isalpha()]
 
         #print ("Total token count:",len(tokens))
         #print ("vocabulary size or token types:", len(set(tokens))) 
@@ -81,9 +82,9 @@ for file in os.listdir(path):
         for w in stemmed_word:
             #readtermID=termID.read()
             currentWordPos=currentWordPos+1
-            if w not in termlist :
-                termlist.append(w)
+            if w not in termlist1 :
                 IDterm=IDterm+1
+                termlist1.update( {w : IDterm} )
                 termID.write(str(IDterm) + "\t" + w + "\n")
                 doclist=[]
                 idDoc_Pos=str(IDdoc)+","+str(currentWordPos)
@@ -92,9 +93,14 @@ for file in os.listdir(path):
             else:
                 #for tID,dID in termDocPair.items:
                 idDoc_Pos=str(IDdoc)+","+str(currentWordPos)
-                termDocPair[termlist.index(w)+1].append(idDoc_Pos)    
+                termDocPair[termlist1[w]].append(idDoc_Pos)    
                 
-            myfile.close()      
+        
+        stemmed_word.clear()
+        token.clear()
+        tokens.clear()
+        stoplist.clear()
+        myfile.close()
         
 for key in termDocPair:
     lst=termDocPair[key]
@@ -109,10 +115,7 @@ for key in termDocPair:
     index=str(key)+" " + str(len(termDocPair[key]))+" "+str(len(set1)) + " " + ' '.join(termDocPair[key]) 
     termIndex.write(index+"\n")
        
-#        stemmed_word.clear()
-#        token.clear()
-#        tokens.clear()
-#        stoplist.clear()
+
 docID.close()
 termID.close()
         #print(tokens)
