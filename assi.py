@@ -26,6 +26,7 @@ path="D:\A.Fast sem 7\IR\corpus\corpus"
 #def processFiles():
 docID=open("docids.txt", "w",errors='ignore')
 termID=open("termids.txt", "w",errors='ignore')
+termIndex=open("term_index.txt","w+",errors='ignore')
 termDocPair = dict()
 for file in os.listdir(path):
     b=b+1;
@@ -93,19 +94,21 @@ for file in os.listdir(path):
                 idDoc_Pos=str(IDdoc)+","+str(currentWordPos)
                 termDocPair[termlist.index(w)+1].append(idDoc_Pos)    
                 
-                
+            myfile.close()      
         
-        for key in termDocPair:
-            lst=termDocPair[key]
-            set1=[]
-            for i in lst:
-                lst1=i.split(',')
-                if lst1[0] not in set1:
-                    set1.append(lst1[0])
-               # print(lst1)
-                
-            print(str(key)+"  " + str(len(termDocPair[key]))+"  "+str(len(set1)) + "  " , termDocPair[key] )
-        myfile.close()
+for key in termDocPair:
+    lst=termDocPair[key]
+    set1=[]
+    for i in lst:
+        lst1=i.split(',')
+        if lst1[0] not in set1:
+            set1.append(lst1[0])
+       # print(lst1)
+        
+   # print(str(key)+" " + str(len(termDocPair[key]))+" "+str(len(set1)) + " " + ' '.join(termDocPair[key]) )
+    index=str(key)+" " + str(len(termDocPair[key]))+" "+str(len(set1)) + " " + ' '.join(termDocPair[key]) 
+    termIndex.write(index+"\n")
+       
 #        stemmed_word.clear()
 #        token.clear()
 #        tokens.clear()
