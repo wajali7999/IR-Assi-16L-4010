@@ -14,6 +14,7 @@ from bs4.element import Comment
 from nltk.tokenize import word_tokenize
 import nltk
 from nltk.stem import SnowballStemmer
+from string import punctuation
 IDdoc=0
 IDterm=0;
 termlist=[]
@@ -27,7 +28,7 @@ termID=open("termids.txt", "w",errors='ignore')
 termDocPair = dict()
 for file in os.listdir(path):
     b=b+1;
-    if b is 6:
+    if b is 2:
         break
     myfile = os.path.join(path, file)
     print(myfile);
@@ -46,10 +47,13 @@ for file in os.listdir(path):
         # break multi-headlines into a line each
         chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
         # drop blank lines
-        texts = '\n'.join(chunk for chunk in chunks if chunk)
+        texts1 = '\n'.join(chunk for chunk in chunks if chunk)
       
+        texts=''.join(c for c in texts1 if c not in punctuation)
+        IDdoc=IDdoc+1       
+        docID.write(str(IDdoc)+"\t"+file+"\n")
 
-        tokenizer = RegexpTokenizer(r'\w+')  
+        tokenizer = RegexpTokenizer(r"[\w']+")  
         token = tokenizer.tokenize(texts) 
         tokens=[x.lower() for x in token]
 
@@ -85,14 +89,13 @@ for file in os.listdir(path):
                 #for tID,dID in termDocPair.items:
                 termDocPair[termlist.index(w)+1].append(IDdoc)    
                 
-        IDdoc=IDdoc+1       
-        docID.write(str(IDdoc)+"\t"+file+"\n")
+
          
         myfile.close()
-        stemmed_word.clear()
-        token.clear()
-        tokens.clear()
-        stoplist.clear()
+#        stemmed_word.clear()
+#        token.clear()
+#        tokens.clear()
+#        stoplist.clear()
 docID.close()
 termID.close()
         #print(tokens)
