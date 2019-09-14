@@ -53,7 +53,7 @@ for file in os.listdir(path):
         IDdoc=IDdoc+1       
         docID.write(str(IDdoc)+"\t"+file+"\n")
 
-        tokenizer = RegexpTokenizer(r"[\w']+")  
+        tokenizer = RegexpTokenizer(r"\w+")  
         token = tokenizer.tokenize(texts) 
         tokens=[x.lower() for x in token]
 
