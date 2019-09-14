@@ -18,6 +18,7 @@ from string import punctuation
 IDdoc=0
 IDterm=0;
 termlist=[]
+
 b=0;
 #path= sys.argv[1]
 path="D:\A.Fast sem 7\IR\corpus\corpus"
@@ -28,7 +29,7 @@ termID=open("termids.txt", "w",errors='ignore')
 termDocPair = dict()
 for file in os.listdir(path):
     b=b+1;
-    if b is 2:
+    if b is 5:
         break
     myfile = os.path.join(path, file)
     print(myfile);
@@ -74,23 +75,36 @@ for file in os.listdir(path):
                 
 #        if b is 1:
 #               print(stemmed_word)
-
+        currentWordPos=0;
         
         for w in stemmed_word:
             #readtermID=termID.read()
+            currentWordPos=currentWordPos+1
             if w not in termlist :
                 termlist.append(w)
                 IDterm=IDterm+1
                 termID.write(str(IDterm) + "\t" + w + "\n")
                 doclist=[]
-                doclist.append(IDdoc)
+                idDoc_Pos=str(IDdoc)+","+str(currentWordPos)
+                doclist.append(idDoc_Pos)
                 termDocPair.update( {IDterm : doclist} )
             else:
                 #for tID,dID in termDocPair.items:
-                termDocPair[termlist.index(w)+1].append(IDdoc)    
+                idDoc_Pos=str(IDdoc)+","+str(currentWordPos)
+                termDocPair[termlist.index(w)+1].append(idDoc_Pos)    
                 
-
-         
+                
+        
+        for key in termDocPair:
+            lst=termDocPair[key]
+            set1=[]
+            for i in lst:
+                lst1=i.split(',')
+                if lst1[0] not in set1:
+                    set1.append(lst1[0])
+               # print(lst1)
+                
+            print(str(key)+"  " + str(len(termDocPair[key]))+"  "+str(len(set1)) + "  " , termDocPair[key] )
         myfile.close()
 #        stemmed_word.clear()
 #        token.clear()
