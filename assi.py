@@ -28,13 +28,22 @@ docID=open("docids.txt", "w",errors='ignore')
 termID=open("termids.txt", "w",errors='ignore')
 termIndex=open("term_index.txt","w+",errors='ignore')
 termDocPair = dict()
+filedict=dict()
 for file in os.listdir(path):
-#    b=b+1;
-#    if b is 5:
+#    b=b+1
+#    if b is 70:
 #        break
     myfile = os.path.join(path, file)
-    print(myfile);
+   # print(myfile);
     myfile=open(myfile,errors='ignore')
+    s=os.path.splitext(file)
+    
+    if s[0]  in filedict:
+        continue
+    else:
+        filedict.update( {s[0] : s[1]} )
+        print(s[0])
+        
 #myfile=open("D:\A.Fast sem 7\IR\corpus\corpus\clueweb12-0000wb-05-13668",'r')
     soup=BeautifulSoup(myfile, 'html.parser')    
     for script in soup(["script", "style"]):
