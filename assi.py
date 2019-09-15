@@ -129,13 +129,19 @@ for key in termDocPair:
             doclistNew.append(termDocPair[key][0])
             ch=ch+1
             prev=int(lst1[0])
+            prevpos=int(lst1[1])
             
         else:
             curr=int(lst1[0])
+            currpos=int(lst1[1])
             enc=curr-prev
-            idDoc_Pos=str(enc)+","+str(lst1[1])
+            if enc==0:
+                idDoc_Pos=str(enc)+","+str(currpos-prevpos)
+            else: 
+                idDoc_Pos=str(enc)+","+str(lst1[1])
             doclistNew.append(idDoc_Pos)
             prev=curr
+            prevpos=currpos
         #prev=lst1[0]
        # print(lst1)
     encoded.update({key:doclistNew})
@@ -148,24 +154,3 @@ for key in termDocPair:
     
 docID.close()
 termID.close()
-        #print(tokens)
-        #Sprint(token)
-#        with open("output.txt", "a",errors='ignore') as ofile:
-#            ofile.write(texts)
-#        #print(texts)
-#
-#out=open("D:\A.Fast sem 7\IR\output.txt")
-#tokenizer = RegexpTokenizer(r'\w+')
-#file_txt= out.read()
-#
-##file_txt = out.decode('utf-8')
-#token = tokenizer.tokenize(file_txt)  
-#tokens=[x.lower() for x in token]
-#print ("Total token count:",len(tokens))
-#print ("vocabulary size or token types:", len(set(tokens))) 
-#tokenCount = nltk.FreqDist(tokens)
-#print (tokenCount)
-#tokenCount.plot(20)  
-#
-#stop=open("D:\A.Fast sem 7\IR\corpus\stoplist.txt")
-#stoplist=stop.read()
