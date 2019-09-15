@@ -27,12 +27,13 @@ path="D:\A.Fast sem 7\IR\corpus\corpus"
 docID=open("docids.txt", "w",errors='ignore')
 termID=open("termids.txt", "w",errors='ignore')
 termIndex=open("term_index.txt","w+",errors='ignore')
+encodedindex=open("encoded_term_index.txt","w+",errors='ignore')
 termDocPair = dict()
 filedict=dict()
 for file in os.listdir(path):
-#    b=b+1
-#    if b is 70:
-#        break
+    b=b+1
+    if b is 5:
+        break
     myfile = os.path.join(path, file)
    # print(myfile);
     myfile=open(myfile,errors='ignore')
@@ -111,20 +112,40 @@ for file in os.listdir(path):
         stoplist.clear()
         myfile.close()
         
+encoded=dict()
 for key in termDocPair:
     lst=termDocPair[key]
+    ch=0
     set1=[]
+#    pr=lst[0].split(',')
+#    prev=pr[0]
+    doclistNew=[]
     for i in lst:
         lst1=i.split(',')
         if lst1[0] not in set1:
             set1.append(lst1[0])
+            
+        if ch == 0:
+            doclistNew.append(termDocPair[key][0])
+            ch=ch+1
+            prev=int(lst1[0])
+            
+        else:
+            curr=int(lst1[0])
+            enc=curr-prev
+            idDoc_Pos=str(enc)+","+str(lst1[1])
+            doclistNew.append(idDoc_Pos)
+            prev=curr
+        #prev=lst1[0]
        # print(lst1)
-        
+    encoded.update({key:doclistNew})
+    indexenc=str(key)+" " + str(len(encoded[key]))+" "+str(len(set1)) + " " + ' '.join(encoded[key]) 
+    encodedindex.write(indexenc+"\n")
    # print(str(key)+" " + str(len(termDocPair[key]))+" "+str(len(set1)) + " " + ' '.join(termDocPair[key]) )
     index=str(key)+" " + str(len(termDocPair[key]))+" "+str(len(set1)) + " " + ' '.join(termDocPair[key]) 
     termIndex.write(index+"\n")
        
-
+    
 docID.close()
 termID.close()
         #print(tokens)
