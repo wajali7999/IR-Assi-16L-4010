@@ -42,9 +42,9 @@ for file in os.listdir(path):
    # print(myfile);
     myfile=open(myfile,errors='ignore')
     s=os.path.splitext(file)
-    b=b+1
-    if b is 5:
-        break   
+#    b=b+1
+#    if b is 5:
+#        break   
     if s[0]  in filedict:
         continue
     else:
@@ -158,41 +158,3 @@ for j in invlist:
     #print(index)
     termIndex.write(index+"\n")
 termIndex.close()
-#encoded=dict()
-#for key in termDocPair:
-#    lst=termDocPair[key]
-#    ch=0
-#    set1=[]
-##    pr=lst[0].split(',')
-##    prev=pr[0]
-#    doclistNew=[]
-#    for i in lst:
-#        lst1=i.split(',')
-#        if lst1[0] not in set1:
-#            set1.append(lst1[0])
-#            
-#        if ch == 0:
-#            doclistNew.append(termDocPair[key][0])
-#            ch=ch+1
-#            prev=int(lst1[0])
-#            prevpos=int(lst1[1])
-#            
-#        else:
-#            curr=int(lst1[0])
-#            currpos=int(lst1[1])
-#            enc=curr-prev
-#            if enc==0:
-#                idDoc_Pos=str(enc)+","+str(currpos-prevpos)
-#            else: 
-#                idDoc_Pos=str(enc)+","+str(lst1[1])
-#            doclistNew.append(idDoc_Pos)
-#            prev=curr
-#            prevpos=currpos
-#        #prev=lst1[0]
-#       # print(lst1)
-#    encoded.update({key:doclistNew})
-#    indexenc=str(key)+" " + str(len(encoded[key]))+" "+str(len(set1)) + " " + ' '.join(encoded[key]) 
-#    encodedindex.write(indexenc+"\n")
-   # print(str(key)+" " + str(len(termDocPair[key]))+" "+str(len(set1)) + " " + ' '.join(termDocPair[key]) )
-   # index=str(key)+" " + str(len(termDocPair[key]))+" "+str(len(set1)) + " " + ' '.join(termDocPair[key]) 
-  #  termIndex.write(index+"\n")
