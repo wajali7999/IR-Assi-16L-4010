@@ -28,15 +28,17 @@ path="D:\A.Fast sem 7\IR\corpus\corpus"
 #termID=open("termids.txt", "w",errors='ignore')
 termIndex=open("term_index_nohash.txt","w+",errors='ignore')
 #encodedindex=open("term_index.txt","w+",errors='ignore')
-
+comlist=[]
 filedict=dict()
+
+def sortlist(e):
+  return e[0]
+
 st=open("D:\A.Fast sem 7\IR\corpus\stoplist.txt")
 stop=st.read()
 stoplist = list(stop.split("\n")) 
 for file in os.listdir(path):
-    b=b+1
-    if b is 5:
-        break
+
     myfile = os.path.join(path, file)
    # print(myfile);
     myfile=open(myfile,errors='ignore')
@@ -48,6 +50,9 @@ for file in os.listdir(path):
         filedict.update( {s[0] : s[1]} )
         print(s[0])
         
+    b=b+1
+    if b == 2:
+        break
 #myfile=open("D:\A.Fast sem 7\IR\corpus\corpus\clueweb12-0000wb-05-13668",'r')
     soup=BeautifulSoup(myfile, 'html.parser')    
     for script in soup(["script", "style"]):
@@ -90,28 +95,57 @@ for file in os.listdir(path):
 #               print(stemmed_word)
         currentWordPos=0;
         
+        termlist=[]
         for w in stemmed_word:
             #readtermID=termID.read()
             currentWordPos=currentWordPos+1
-            if w not in termlist1 :
+            if w not in termlist :
                 IDterm=IDterm+1
-                termlist1.update( {w : IDterm} )
+                termlist.append(w)
+                #termlist1.update( {w : IDterm} )
                 #termID.write(str(IDterm) + "\t" + w + "\n")
                 doclist=[]
-                idDoc_Pos=str(IDdoc)+","+str(currentWordPos)
-                doclist.append(idDoc_Pos)
+                #idDoc_Pos=str(IDdoc)+","+str(currentWordPos)
+                doclist.append(IDterm)
+                doclist.append(IDdoc)
+                doclist.append(currentWordPos)
+                comlist.append(doclist)
                 #termDocPair.update( {IDterm : doclist} )
             else:
-                #for tID,dID in termDocPair.items:
-                idDoc_Pos=str(IDdoc)+","+str(currentWordPos)
-               # termDocPair[termlist1[w]].append(idDoc_Pos)    
-                
+                 doclist=[]
+                 doclist.append(termlist.index(w)+1)
+                 doclist.append(IDdoc)
+                 doclist.append(currentWordPos)
+                 comlist.append(doclist)
+                 
+        
         
         stemmed_word.clear()
         token.clear()
         tokens.clear()
         stoplist.clear()
         myfile.close()
+        
+comlist.sort(key=sortlist)
+
+fl=1
+invlist=[]
+dlist=""
+for l in comlist:
+    set1=[]
+    if l[0] is fl:
+        dlist=dlist+str(l[1])+ ","+str(l[2])+" "
+    else:
+        invlist.append(str(fl)+" "+dlist)
+        dlist=""
+        dlist=dlist+str(l[1])+ ","+str(l[2])+" "
+        fl=fl+1
+    lst=' '.join(l)    
+    for i in lst:
+        lst1=i.split(',')
+        #if lst1[0] not in set1:
+            
+    
 #        
 #encoded=dict()
 #for key in termDocPair:
@@ -151,6 +185,3 @@ for file in os.listdir(path):
    # print(str(key)+" " + str(len(termDocPair[key]))+" "+str(len(set1)) + " " + ' '.join(termDocPair[key]) )
    # index=str(key)+" " + str(len(termDocPair[key]))+" "+str(len(set1)) + " " + ' '.join(termDocPair[key]) 
   #  termIndex.write(index+"\n")
-       
-    
-
