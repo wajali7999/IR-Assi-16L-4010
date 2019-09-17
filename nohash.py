@@ -17,8 +17,7 @@ from nltk.stem import SnowballStemmer
 from string import punctuation
 IDdoc=0
 IDterm=0;
-termlist1=dict()
-
+termlist=[]
 b=0;
 #path= sys.argv[1]
 path="D:\A.Fast sem 7\IR\corpus\corpus"
@@ -43,13 +42,15 @@ for file in os.listdir(path):
    # print(myfile);
     myfile=open(myfile,errors='ignore')
     s=os.path.splitext(file)
-    
+    b=b+1
+    if b is 5:
+        break   
     if s[0]  in filedict:
         continue
     else:
         filedict.update( {s[0] : s[1]} )
         print(s[0])
-        
+
 
 #myfile=open("D:\A.Fast sem 7\IR\corpus\corpus\clueweb12-0000wb-05-13668",'r')
     soup=BeautifulSoup(myfile, 'html.parser')    
@@ -90,7 +91,7 @@ for file in os.listdir(path):
 
         currentWordPos=0;
         
-        termlist=[]
+        
         for w in stemmed_word:
             #readtermID=termID.read()
             currentWordPos=currentWordPos+1
@@ -135,7 +136,7 @@ for l in comlist:
         dlist=""
         dlist=dlist+" "+str(l[1])+ ","+str(l[2])
         fl=fl+1
-    #lst=' '.join(l)
+
 
 cnt=0
 for j in invlist:
@@ -156,6 +157,7 @@ for j in invlist:
     index=str(cnt)+" " + str(len(lst)-1)+" "+str(len(set1)) + " " + ' '.join(finlist) 
     #print(index)
     termIndex.write(index+"\n")
+termIndex.close()
 #encoded=dict()
 #for key in termDocPair:
 #    lst=termDocPair[key]
