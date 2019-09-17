@@ -134,18 +134,31 @@ dlist=""
 for l in comlist:
     set1=[]
     if l[0] is fl:
-        dlist=dlist+str(l[1])+ ","+str(l[2])+" "
+        dlist=dlist+" "+str(l[1])+ ","+str(l[2])
     else:
-        invlist.append(str(fl)+" "+dlist)
+        invlist.append(str(fl)+dlist)
         dlist=""
-        dlist=dlist+str(l[1])+ ","+str(l[2])+" "
+        dlist=dlist+" "+str(l[1])+ ","+str(l[2])
         fl=fl+1
-    lst=' '.join(l)    
+    #lst=' '.join(l)
+
+cnt=0
+for j in invlist:
+    cnt=cnt+1
+    lst=j.split(" ")
+    set1=[]
+#    if int(j[0]) ==10:
+#        break
+    tskip=1
     for i in lst:
-        lst1=i.split(',')
-        #if lst1[0] not in set1:
-            
-    
+        if tskip==1:
+            tskip=0
+            continue
+        lst1=i.split(",")
+        if lst1[0] not in set1:
+            set1.append(lst1[0])
+        
+    index=str(cnt)+" " + str(len(lst))+" "+str(len(set1)) + " " + ' '.join(termDocPair[key]) 
 #        
 #encoded=dict()
 #for key in termDocPair:
