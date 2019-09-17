@@ -50,9 +50,7 @@ for file in os.listdir(path):
         filedict.update( {s[0] : s[1]} )
         print(s[0])
         
-    b=b+1
-    if b == 2:
-        break
+
 #myfile=open("D:\A.Fast sem 7\IR\corpus\corpus\clueweb12-0000wb-05-13668",'r')
     soup=BeautifulSoup(myfile, 'html.parser')    
     for script in soup(["script", "style"]):
@@ -86,13 +84,10 @@ for file in os.listdir(path):
         for w in list(tokens):  
             if w in stoplist:
                 tokens.remove(w)
-#        if b is 1:
-#            print(tokens)
+
         snowball_stemmer = SnowballStemmer('english')
         stemmed_word = [snowball_stemmer.stem(word) for word in tokens]
-                
-#        if b is 1:
-#               print(stemmed_word)
+
         currentWordPos=0;
         
         termlist=[]
@@ -157,9 +152,10 @@ for j in invlist:
         lst1=i.split(",")
         if lst1[0] not in set1:
             set1.append(lst1[0])
-        
-    index=str(cnt)+" " + str(len(lst))+" "+str(len(set1)) + " " + ' '.join(termDocPair[key]) 
-#        
+    finlist=lst[1:]    
+    index=str(cnt)+" " + str(len(lst)-1)+" "+str(len(set1)) + " " + ' '.join(finlist) 
+    #print(index)
+    termIndex.write(index+"\n")
 #encoded=dict()
 #for key in termDocPair:
 #    lst=termDocPair[key]
