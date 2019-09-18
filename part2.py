@@ -15,6 +15,7 @@ from nltk.tokenize import word_tokenize
 import nltk
 from nltk.stem import SnowballStemmer
 from string import punctuation
+import string
 IDdoc=0
 IDterm=0;
 termlist1=dict()
@@ -62,8 +63,8 @@ for file in os.listdir(path):
         # break multi-headlines into a line each
         chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
         # drop blank lines
-        texts1 = '\n'.join(chunk for chunk in chunks if chunk)
-      
+        texts2 = '\n'.join(chunk for chunk in chunks if chunk)
+        texts1=''.join(c for c in texts2 if c  in string.printable)
         texts=''.join(c for c in texts1 if c not in punctuation)
         #texts=''.join(c for c in texts2 if c.isalpha())
         IDdoc=IDdoc+1       
