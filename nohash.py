@@ -124,15 +124,28 @@ comlist.sort(key=sortlist)
 fl=1
 invlist=[]
 dlist=""
-for l in comlist:
-    set1=[]
-    if l[0] is fl:
-        dlist=dlist+" "+str(l[1])+ ","+str(l[2])
+travcnt=0
+travcnt1=0
+lnth=len(comlist)
+prev=comlist[travcnt][0]
+while travcnt1<lnth:
+   
+    travcnt1=travcnt1+1
+    if comlist[travcnt][0] == prev:
+        dlist=dlist+" "+str(comlist[travcnt][1])+ ","+str(comlist[travcnt][2])
+        travcnt=travcnt+1
+
+        if travcnt1==lnth:
+            invlist.append(str(prev)+dlist)
     else:
-        invlist.append(str(fl)+dlist)
+        invlist.append(str(prev)+dlist)
         dlist=""
-        dlist=dlist+" "+str(l[1])+ ","+str(l[2])
-        fl=fl+1
+
+        prev=comlist[travcnt][0]
+        travcnt1=travcnt1-1
+
+        
+       
 
 
 cnt=0
