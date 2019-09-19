@@ -7,12 +7,10 @@ Created on Fri Sep  6 22:32:32 2019
 #IR Assignment
 import sys
 import os
-import requests
 from nltk.tokenize import RegexpTokenizer
 from bs4 import BeautifulSoup
 from bs4.element import Comment
 from nltk.tokenize import word_tokenize
-import nltk
 from nltk.stem import SnowballStemmer
 from string import punctuation
 import string
@@ -24,10 +22,7 @@ b=0;
 path= sys.argv[1]
 #path="D:\A.Fast sem 7\IR\corpus\corpus"
 
-#def processFiles():
-#docID=open("docids.txt", "w",errors='ignore')
-#termID=open("termids.txt", "w",errors='ignore')
-#termIndex=open("term_index.txt","w+",errors='ignore')
+
 encodedindex=open("term_index.txt","w+",errors='ignore')
 termDocPair = dict()
 filedict=dict()
@@ -48,8 +43,7 @@ for file in os.listdir(path):
     else:
         filedict.update( {s[0] : s[1]} )
         print(s[0])
-        
-#myfile=open("D:\A.Fast sem 7\IR\corpus\corpus\clueweb12-0000wb-05-13668",'r')
+
     soup=BeautifulSoup(myfile, 'html.parser')    
     for script in soup(["script", "style"]):
         script.extract()    # rip it out
@@ -66,7 +60,6 @@ for file in os.listdir(path):
         texts2 = '\n'.join(chunk for chunk in chunks if chunk)
         texts1=''.join(c for c in texts2 if c  in string.printable)
         texts=''.join(c for c in texts1 if c not in punctuation)
-        #texts=''.join(c for c in texts2 if c.isalpha())
         IDdoc=IDdoc+1       
         #docID.write(str(IDdoc)+"\t"+file+"\n")
 
@@ -144,8 +137,8 @@ for key in termDocPair:
             doclistNew.append(idDoc_Pos)
             prev=curr
             prevpos=currpos
-        #prev=lst1[0]
-       # print(lst1)
+
+
     encoded.update({key:doclistNew})
     indexenc=str(key)+" " + str(len(encoded[key]))+" "+str(len(set1)) + " " + ' '.join(encoded[key]) 
     encodedindex.write(indexenc+"\n")
