@@ -5,9 +5,10 @@ Created on Fri Sep  6 22:32:32 2019
 @author: wajahat
 """
 #IR Assignment
-import sys
+
 import os
-import requests
+import sys
+import string
 from nltk.tokenize import RegexpTokenizer
 from bs4 import BeautifulSoup
 from bs4.element import Comment
@@ -19,14 +20,10 @@ IDdoc=0
 IDterm=0;
 termlist=[]
 b=0;
-#path= sys.argv[1]
-path="D:\A.Fast sem 7\IR\corpus\corpus"
+path= sys.argv[1]
+#path="D:\A.Fast sem 7\IR\corpus\corpus"
 
-#def processFiles():
-#docID=open("docids.txt", "w",errors='ignore')
-#termID=open("termids.txt", "w",errors='ignore')
 termIndex=open("term_index_nohash.txt","w+",errors='ignore')
-#encodedindex=open("term_index.txt","w+",errors='ignore')
 comlist=[]
 filedict=dict()
 
@@ -66,10 +63,10 @@ for file in os.listdir(path):
         # break multi-headlines into a line each
         chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
         # drop blank lines
-        texts1 = '\n'.join(chunk for chunk in chunks if chunk)
-      
+        texts2 = '\n'.join(chunk for chunk in chunks if chunk)
+        texts1=''.join(c for c in texts2 if c  in string.printable)
         texts=''.join(c for c in texts1 if c not in punctuation)
-        #texts=''.join(c for c in texts2 if c.isalpha())
+      
         IDdoc=IDdoc+1       
         #docID.write(str(IDdoc)+"\t"+file+"\n")
 
